@@ -1,7 +1,5 @@
 package shant;
 
-import static shant.TransliterationMap.CAPITALS;
-
 public class Transliterate {
     public String transliterate(String input) {
         StringBuilder result = new StringBuilder();
@@ -34,8 +32,8 @@ public class Transliterate {
     }
 
     private String applyCustomLogic(char c, boolean isStartOfWord, int i, char[] chars) {
-        if ((c == 'Ե' || c == 'ե') && isStartOfWord) {
-            return CAPITALS.contains(c) ? "Ye" : "ye";
+        if (c == 'ե' && isStartOfWord) {
+            return "ye";
         } else if (c == 'Ո' && isStartOfWord) {
             return "Vo";
         } else if (c == 'ի' && i > 0 && chars[i + 1] == 'ւ') {

@@ -13,7 +13,7 @@ public class TransliterationMap {
                 Map.entry('Բ', "P"), Map.entry('բ', "p"),
                 Map.entry('Գ', "K"), Map.entry('գ', "k"),
                 Map.entry('Դ', "T"), Map.entry('դ', "t"),
-                Map.entry('Ե', "E"), Map.entry('ե', "e"), Map.entry('և', "ev"),
+                Map.entry('Ե', "Ye"), Map.entry('ե', "e"), Map.entry('և', "ev"),
                 Map.entry('Զ', "Z"), Map.entry('զ', "z"),
                 Map.entry('Է', "E"), Map.entry('է', "e"),
                 Map.entry('Ը', "Uh"), Map.entry('ը', "uh"),
