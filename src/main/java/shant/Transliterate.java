@@ -50,8 +50,13 @@ public class Transliterate {
                 return "vo";
             }
             return "oo";
-        } else if (c == 'յ' && isEndOfWord(chars, i) && getWordLength(chars, i) > 5) {
-            return "h";
+        } else if (c == 'յ') {
+            if (isEndOfWord(chars, i) && getWordLength(chars, i) > 5) {
+                return "h";
+            }
+            if (isStartOfWord(chars, i)) {
+                return "h";
+            }
         }
         return null;
     }

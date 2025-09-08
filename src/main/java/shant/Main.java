@@ -40,7 +40,9 @@ public class Main {
         try {
             String content = Files.readString(inputFile);
 
-            String transliteratedContent = transliterate.transliterate(content);
+            String cleanedContent = content.replaceAll("[^\\p{L}\\s]", "");
+
+            String transliteratedContent = transliterate.transliterate(cleanedContent);
 
             // Write the output file to the resources directory
             Files.writeString(outputFile, transliteratedContent);

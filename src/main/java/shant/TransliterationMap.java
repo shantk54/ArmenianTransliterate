@@ -43,7 +43,7 @@ public class TransliterationMap {
                 Map.entry('Ր', "R"), Map.entry('ր', "r"),
                 Map.entry('Ց', "Ts"), Map.entry('ց', "ts"),
                 Map.entry('Ւ', "V"), Map.entry('ւ', "v"),
-                Map.entry('Փ', "Pʿ"), Map.entry('փ', "pʿ"),
+                Map.entry('Փ', "Pʿ"), Map.entry('փ', "p"),
                 Map.entry('Ք', "Kʿ"), Map.entry('ք', "k"),
                 Map.entry('Օ', "O"), Map.entry('օ', "o"),
                 Map.entry('Ֆ', "F"), Map.entry('ֆ', "f"),
