@@ -42,6 +42,12 @@ public class Transliterate {
                     return "enk";
                 }
             }
+            if (chars[i + 1] == 'մ' && isEndOfWord(chars, i + 1)) {
+                return "em";
+            }
+            if (chars[i + 1] == 'ս' && isEndOfWord(chars, i + 1)) {
+                return "es";
+            }
             return "ye";
         } else if (c == 'Ո' && isStartOfWord(chars, i)) {
             if (i + 1 < chars.length && chars[i + 1] == 'ւ') {
@@ -49,6 +55,9 @@ public class Transliterate {
             }
             return "Vo";
         } else if (c == 'ի' && i > 0 && chars[i + 1] == 'ւ') {
+            if (isEndOfWord(chars, i + 1)) {
+                return "eev";
+            }
             return "yoo";
         } else if (c == 'ո' && i > 0 && chars[i + 1] == 'ւ') {
             if (chars[i + 2] == 'ո') {
@@ -56,6 +65,9 @@ public class Transliterate {
             }
             if (chars[i + 2] == 'ա') {
                 return "va";
+            }
+            if (chars[i + 2] == 'ե') {
+                return "ve";
             }
             return "oo";
         } else if (c == 'ո' && isStartOfWord(chars, i)) {
@@ -72,7 +84,7 @@ public class Transliterate {
             return "ooyr";
         } else if (c == 'ո' && i + 2 < chars.length && chars[i + 1] == 'յ' && chars[i + 2] == 'ս') {
             return "ooys";
-        }else if (c == 'ջ' && isStartOfWord(chars, i)) {
+        } else if (c == 'ջ' && isStartOfWord(chars, i)) {
             return "j";
         } else if (c == 'Ջ' && isStartOfWord(chars, i)) {
             return "J";
@@ -97,31 +109,29 @@ public class Transliterate {
 
     private static int getWordLength(char[] chars, int i) {
         int start = i;
-        // move back to the start of the word
         while (start > 0 && chars[start - 1] != ' ') {
             start--;
         }
-
         int end = i;
-        // move forward to the end of the word
         while (end < chars.length && chars[end] != ' ') {
             end++;
         }
-
-        return end - start; // length of the word
+        return end - start;
     }
 
 
 
     private int shouldSkipNextCharacter(char c, int i, char[] chars) {
-        if ((c == 'ո' && i + 2 < chars.length && chars[i + 1] == 'ւ' && chars[i + 2] == 'ո') || (c == 'ո' && i + 2 < chars.length && chars[i + 1] == 'ւ' && chars[i + 2] == 'ա') || (c == 'ո' && i + 2 < chars.length && chars[i + 1] == 'յ' && chars[i + 2] == 'ր') || (c == 'ո' && i + 2 < chars.length && chars[i + 1] == 'յ' && chars[i + 2] == 'ս') || (c == 'ե' && i + 2 > 0 && i + 1 < chars.length && chars[i + 1] == 'ն' && chars[i + 2] == 'ք')) {
+        if ((c == 'ո' && i + 2 < chars.length && chars[i + 1] == 'ւ' && chars[i + 2] == 'ո') || (c == 'ո' && i + 2 < chars.length && chars[i + 1] == 'ւ' && chars[i + 2] == 'ա') || (c == 'ո' && i + 2 < chars.length && chars[i + 1] == 'ւ' && chars[i + 2] == 'ե') || (c == 'ո' && i + 2 < chars.length && chars[i + 1] == 'յ' && chars[i + 2] == 'ր') || (c == 'ո' && i + 2 < chars.length && chars[i + 1] == 'յ' && chars[i + 2] == 'ս') || (c == 'ե' && i + 2 > 0 && i + 1 < chars.length && chars[i + 1] == 'ն' && chars[i + 2] == 'ք')) {
             return 2;
         }
 
         if (((c == 'ո' || c == 'Ո') && i + 1 < chars.length && chars[i + 1] == 'ւ') ||
                 ((c == 'ի' || c == 'Ի') && i > 0 && i + 1 < chars.length && chars[i + 1] == 'ւ') ||
                 ((c == 'ե' || c == 'Ե') && isStartOfWord(chars,i) && chars[i + 1] == 'ն' && isEndOfWord(chars,i + 1)) ||
-                (c == 'ե' && chars[i + 1] == 'ա')) {
+                (c == 'ե' && chars[i + 1] == 'ա') ||
+                (c == 'ե' && chars[i + 1] == 'մ') ||
+                (c == 'ե' && chars[i + 1] == 'ս')) {
             return 1;
         }
 
