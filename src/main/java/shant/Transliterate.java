@@ -44,19 +44,31 @@ public class Transliterate {
             }
             return "Vo";
         } else if (c == 'ի' && i > 0 && chars[i + 1] == 'ւ') {
-            return "oo";
+            return "yoo";
         } else if (c == 'ո' && i > 0 && chars[i + 1] == 'ւ') {
             if (chars[i + 2] == 'ո') {
                 return "vo";
             }
+            if (chars[i + 2] == 'ա') {
+                return "va";
+            }
             return "oo";
-        } else if (c == 'յ') {
+        } else if (c == 'ո' && isStartOfWord(chars, i)) {
+            return "vo";
+        }
+        else if (c == 'յ') {
             if (isEndOfWord(chars, i) && getWordLength(chars, i) > 5) {
                 return "h";
             }
             if (isStartOfWord(chars, i)) {
                 return "h";
             }
+        } else if (c == 'ո' && i + 2 < chars.length && chars[i + 1] == 'յ' && chars[i + 2] == 'ր') {
+            return "ooyr";
+        } else if (c == 'ջ' && isStartOfWord(chars, i)) {
+            return "j";
+        } else if (c == 'Ջ' && isStartOfWord(chars, i)) {
+            return "J";
         }
         return null;
     }
@@ -93,7 +105,9 @@ public class Transliterate {
 
 
     private int shouldSkipNextCharacter(char c, int i, char[] chars) {
-        if (c == 'ո' && i + 2 < chars.length && chars[i + 1] == 'ւ' && chars[i + 2] == 'ո') {
+        if ((c == 'ո' && i + 2 < chars.length && chars[i + 1] == 'ւ' && chars[i + 2] == 'ո') ||
+                (c == 'ո' && i + 2 < chars.length && chars[i + 1] == 'ւ' && chars[i + 2] == 'ա') ||
+                (c == 'ո' && i + 2 < chars.length && chars[i + 1] == 'յ' && chars[i + 2] == 'ր')) {
             return 2;
         }
 
