@@ -27,7 +27,7 @@ public class TransliterationMap {
                 Map.entry('Հ', "H"), Map.entry('հ', "h"),
                 Map.entry('Ձ', "Ts"), Map.entry('ձ', "ts"),
                 Map.entry('Ղ', "Gh"), Map.entry('ղ', "gh"),
-                Map.entry('Ճ', "J"), Map.entry('ճ', "j"),
+                Map.entry('Ճ', "Dj"), Map.entry('ճ', "dj"),
                 Map.entry('Մ', "M"), Map.entry('մ', "m"),
                 Map.entry('Յ', "H"), Map.entry('յ', "y"),
                 Map.entry('Ն', "N"), Map.entry('ն', "n"),
@@ -47,7 +47,15 @@ public class TransliterationMap {
                 Map.entry('Ք', "Kʿ"), Map.entry('ք', "k"),
                 Map.entry('Օ', "O"), Map.entry('օ', "o"),
                 Map.entry('Ֆ', "F"), Map.entry('ֆ', "f"),
-                Map.entry('։', "."), Map.entry(',', ","), Map.entry(':', "."), Map.entry('՞', ""), Map.entry('`', ""), Map.entry('՛', ""), Map.entry('‘', "'"), Map.entry('’', "'"), Map.entry('՜', ""), Map.entry(' ', " "), Map.entry('՝', " ")
+
+                Map.entry('։', "."), Map.entry(',', ","),
+                Map.entry(':', "."), Map.entry('՞', ""),
+                Map.entry('`', ""), Map.entry('՛', ""),
+                Map.entry('‘', "'"), Map.entry('’', "'"),
+                Map.entry('՜', ""), Map.entry(' ', " "),
+                Map.entry('՝', " "), Map.entry('\n', "\n"),
+                Map.entry('\r', "")
+
         );
 
         CAPITALS = Set.of(

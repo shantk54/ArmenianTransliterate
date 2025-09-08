@@ -1,7 +1,9 @@
 package shant;
 
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Main {
     public static void main(String[] args) {
@@ -38,12 +40,7 @@ public class Main {
         try {
             String content = Files.readString(inputFile);
 
-            // Clean the content by replacing newlines, tabs, and non-printable characters
-            String cleanedContent = content
-                    .replaceAll("[\\n\\r\\t]", " ") // Replace newlines and tabs with a space
-                    .replaceAll("\\p{C}", "");     // Remove non-printable Unicode characters
-
-            String transliteratedContent = transliterate.transliterate(cleanedContent);
+            String transliteratedContent = transliterate.transliterate(content);
 
             // Write the output file to the resources directory
             Files.writeString(outputFile, transliteratedContent);
