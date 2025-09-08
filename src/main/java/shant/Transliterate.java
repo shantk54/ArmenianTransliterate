@@ -9,23 +9,25 @@ public class Transliterate {
             char c = chars[i];
             boolean isStartOfWord = (i == 0 || chars[i - 1] == ' ');
 
-            if (c == ' ') {
-                result.append(' ');
-            } else if (c == '՜') {
-                // Ignore this character
+            String customResult = applyCustomLogic(c, isStartOfWord, i, chars);
+            if (customResult != null) {
+                result.append(customResult);
+                int skip = shouldSkipNextCharacter(c, i, chars);
+                i += skip;
+            } else if (TransliterationMap.BASE_MAP.containsKey(c)) {
+                result.append(TransliterationMap.BASE_MAP.get(c));
             } else {
-                String customResult = applyCustomLogic(c, isStartOfWord, i, chars);
-                if (customResult != null) {
-                    result.append(customResult);
-                    if (shouldSkipNextCharacter(c, i, chars)) {
-                        i++;
-                    }
-                } else if (TransliterationMap.BASE_MAP.containsKey(c)) {
-                    result.append(TransliterationMap.BASE_MAP.get(c));
-                } else {
-                    System.err.println("Unmapped character: " + c);
-                    result.append(c);
+                int start = i;
+                while (start > 0 && chars[start - 1] != ' ') {
+                    start--;
                 }
+                int end = i;
+                while (end < chars.length && chars[end] != ' ') {
+                    end++;
+                }
+                String word = input.substring(start, end);
+                System.err.println("Unmapped word: " + word);
+                result.append(c);
             }
         }
         return result.toString();
@@ -38,14 +40,26 @@ public class Transliterate {
             return "Vo";
         } else if (c == 'ի' && i > 0 && chars[i + 1] == 'ւ') {
             return "oo";
-        } else if (c == 'ո' && i > 0 && chars[i + 1] == 'ւ') {
+        }
+        else if (c == 'ո' && i > 0 && chars[i + 1] == 'ւ') {
+            if (chars[i + 2] == 'ո') {
+                return "vo";
+            }
             return "oo";
         }
         return null;
     }
 
-    private boolean shouldSkipNextCharacter(char c, int i, char[] chars) {
-        return (c == 'ո' && i > 0 && i + 1 < chars.length && chars[i + 1] == 'ւ') ||
-                (c == 'ի' && i > 0 && i + 1 < chars.length && chars[i + 1] == 'ւ');
+    private int shouldSkipNextCharacter(char c, int i, char[] chars) {
+        if (c == 'ո' && i > 0 && i + 2 < chars.length && chars[i + 1] == 'ւ' && chars[i + 2] == 'ո') {
+            return 2;
+        }
+
+        if ((c == 'ո' && i > 0 && i + 1 < chars.length && chars[i + 1] == 'ւ') ||
+                (c == 'ի' && i > 0 && i + 1 < chars.length && chars[i + 1] == 'ւ')) {
+            return 1;
+        }
+
+        return 0;
     }
 }

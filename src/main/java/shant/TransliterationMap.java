@@ -47,7 +47,7 @@ public class TransliterationMap {
                 Map.entry('Ք', "Kʿ"), Map.entry('ք', "k"),
                 Map.entry('Օ', "O"), Map.entry('օ', "o"),
                 Map.entry('Ֆ', "F"), Map.entry('ֆ', "f"),
-                Map.entry('։', "."), Map.entry(',', ",")
+                Map.entry('։', "."), Map.entry(',', ","), Map.entry(':', "."), Map.entry('՞', ""), Map.entry('`', ""), Map.entry('՛', ""), Map.entry('‘', "'"), Map.entry('’', "'"), Map.entry('՜', ""), Map.entry(' ', " "), Map.entry('՝', " ")
         );
 
         CAPITALS = Set.of(

@@ -15,12 +15,12 @@ public class Main {
                 throw new IOException("Resources directory does not exist or is not a directory");
             }
 
-            // Find the first .txt file in the resources directory
+// Find the first .txt file in the resources directory that is not named output.txt
             inputFile = Files.list(resourcesDir)
                     .filter(path -> path.toString().endsWith(".txt"))
+                    .filter(path -> !"output.txt".equals(path.getFileName().toString())) // Skip output.txt
                     .findFirst()
-                    .orElseThrow(() -> new IOException("No .txt file found in resources directory"));
-
+                    .orElseThrow(() -> new IOException("No valid .txt file found in resources directory"));
             // Check if the input file is named output.txt
             if ("output.txt".equals(inputFile.getFileName().toString())) {
                 throw new IOException("Input file cannot be named output.txt");
@@ -38,7 +38,12 @@ public class Main {
         try {
             String content = Files.readString(inputFile);
 
-            String transliteratedContent = transliterate.transliterate(content);
+            // Clean the content by replacing newlines, tabs, and non-printable characters
+            String cleanedContent = content
+                    .replaceAll("[\\n\\r\\t]", " ") // Replace newlines and tabs with a space
+                    .replaceAll("\\p{C}", "");     // Remove non-printable Unicode characters
+
+            String transliteratedContent = transliterate.transliterate(cleanedContent);
 
             // Write the output file to the resources directory
             Files.writeString(outputFile, transliteratedContent);
