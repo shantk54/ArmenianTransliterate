@@ -34,8 +34,13 @@ public class Transliterate {
 
     private String applyCustomLogic(char c, int i, char[] chars) {
         if (c == 'ե' && isStartOfWord(chars, i)) {
-            if (chars[i + 1] == 'ն' && isEndOfWord(chars, i + 1)) {
-                return "en";
+            if (chars[i + 1] == 'ն') {
+                if (isEndOfWord(chars, i + 1)) {
+                    return "en";
+                }
+                if (chars[i + 2] == 'ք' && isEndOfWord(chars, i + 2)) {
+                    return "enk";
+                }
             }
             return "ye";
         } else if (c == 'Ո' && isStartOfWord(chars, i)) {
@@ -65,10 +70,14 @@ public class Transliterate {
             }
         } else if (c == 'ո' && i + 2 < chars.length && chars[i + 1] == 'յ' && chars[i + 2] == 'ր') {
             return "ooyr";
-        } else if (c == 'ջ' && isStartOfWord(chars, i)) {
+        } else if (c == 'ո' && i + 2 < chars.length && chars[i + 1] == 'յ' && chars[i + 2] == 'ս') {
+            return "ooys";
+        }else if (c == 'ջ' && isStartOfWord(chars, i)) {
             return "j";
         } else if (c == 'Ջ' && isStartOfWord(chars, i)) {
             return "J";
+        } else if (c == 'ե' && chars[i + 1] == 'ա') {
+            return "ya";
         }
         return null;
     }
@@ -105,15 +114,14 @@ public class Transliterate {
 
 
     private int shouldSkipNextCharacter(char c, int i, char[] chars) {
-        if ((c == 'ո' && i + 2 < chars.length && chars[i + 1] == 'ւ' && chars[i + 2] == 'ո') ||
-                (c == 'ո' && i + 2 < chars.length && chars[i + 1] == 'ւ' && chars[i + 2] == 'ա') ||
-                (c == 'ո' && i + 2 < chars.length && chars[i + 1] == 'յ' && chars[i + 2] == 'ր')) {
+        if ((c == 'ո' && i + 2 < chars.length && chars[i + 1] == 'ւ' && chars[i + 2] == 'ո') || (c == 'ո' && i + 2 < chars.length && chars[i + 1] == 'ւ' && chars[i + 2] == 'ա') || (c == 'ո' && i + 2 < chars.length && chars[i + 1] == 'յ' && chars[i + 2] == 'ր') || (c == 'ո' && i + 2 < chars.length && chars[i + 1] == 'յ' && chars[i + 2] == 'ս') || (c == 'ե' && i + 2 > 0 && i + 1 < chars.length && chars[i + 1] == 'ն' && chars[i + 2] == 'ք')) {
             return 2;
         }
 
         if (((c == 'ո' || c == 'Ո') && i + 1 < chars.length && chars[i + 1] == 'ւ') ||
                 ((c == 'ի' || c == 'Ի') && i > 0 && i + 1 < chars.length && chars[i + 1] == 'ւ') ||
-                ((c == 'ե' || c == 'Ե') && isStartOfWord(chars,i) && chars[i + 1] == 'ն' && isEndOfWord(chars,i + 1))) {
+                ((c == 'ե' || c == 'Ե') && isStartOfWord(chars,i) && chars[i + 1] == 'ն' && isEndOfWord(chars,i + 1)) ||
+                (c == 'ե' && chars[i + 1] == 'ա')) {
             return 1;
         }
 

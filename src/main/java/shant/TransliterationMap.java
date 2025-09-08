@@ -53,8 +53,9 @@ public class TransliterationMap {
                 Map.entry('`', ""), Map.entry('՛', ""),
                 Map.entry('‘', "'"), Map.entry('’', "'"),
                 Map.entry('՜', ""), Map.entry(' ', " "),
-                Map.entry('՝', " "), Map.entry('\n', "\n"),
-                Map.entry('\r', "")
+                Map.entry('՝', " "), Map.entry('.', ";"),
+                Map.entry('-', " "),
+                Map.entry('\n', "\n"), Map.entry('\r', "")
 
         );
 
