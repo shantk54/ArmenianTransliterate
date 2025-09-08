@@ -62,12 +62,17 @@ public class Transliterate {
     }
 
     private static boolean isStartOfWord(char[] chars, int i) {
-        return (i == 0 || chars[i - 1] == ' ');
+        return (i == 0 || Character.isWhitespace(chars[i - 1]));
     }
 
+
     private static boolean isEndOfWord(char[] chars, int i) {
-        return (i == chars.length - 1 || !Character.isLetter(chars[i + 1]));
+        if (i >= chars.length - 1) {
+            return true;
+        }
+        return Character.isWhitespace(chars[i + 1]);
     }
+
 
     private static int getWordLength(char[] chars, int i) {
         int start = i;
