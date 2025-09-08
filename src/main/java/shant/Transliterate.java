@@ -50,7 +50,7 @@ public class Transliterate {
                 return "vo";
             }
             return "oo";
-        } else if (c == 'յ' && isEndOfWord(chars, i)) {
+        } else if (c == 'յ' && isEndOfWord(chars, i) && getWordLength(chars, i) > 5) {
             return "h";
         }
         return null;
@@ -63,6 +63,23 @@ public class Transliterate {
     private static boolean isEndOfWord(char[] chars, int i) {
         return (i == chars.length - 1 || !Character.isLetter(chars[i + 1]));
     }
+
+    private static int getWordLength(char[] chars, int i) {
+        int start = i;
+        // move back to the start of the word
+        while (start > 0 && chars[start - 1] != ' ') {
+            start--;
+        }
+
+        int end = i;
+        // move forward to the end of the word
+        while (end < chars.length && chars[end] != ' ') {
+            end++;
+        }
+
+        return end - start; // length of the word
+    }
+
 
 
     private int shouldSkipNextCharacter(char c, int i, char[] chars) {
