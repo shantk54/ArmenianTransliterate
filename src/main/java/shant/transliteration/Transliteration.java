@@ -1,8 +1,11 @@
 package shant.transliteration;
 
+import shant.rules.DooRule;
+import shant.rules.EhRule;
 import shant.rules.HiRule;
 import shant.rules.HyoonRule;
 import shant.rules.JRule;
+import shant.rules.NdjRule;
 import shant.rules.OoyRule;
 import shant.rules.TransliterationRule;
 import shant.rules.VoRule;
@@ -15,9 +18,12 @@ import java.util.List;
 public class Transliteration {
 
     private final List<TransliterationRule> rules = List.of(
+            new DooRule(),
+            new EhRule(),
             new HiRule(),
             new HyoonRule(),
             new JRule(),
+            new NdjRule(),
             new OoyRule(),
             new VoRule(),
             new YevRule(),

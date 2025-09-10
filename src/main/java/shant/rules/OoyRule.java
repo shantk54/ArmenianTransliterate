@@ -3,12 +3,19 @@ package shant.rules;
 public class OoyRule extends TransliterationRule {
     @Override
     public RuleResult apply(char[] chars, int i) {
-        if (chars[i] == 'ո' && i + 2 < chars.length && chars[i + 1] == 'յ') {
-            if (chars[i + 2] == 'ր') {
-                return new RuleResult("ooyr", 2);
-            }
-            if (chars[i + 2] == 'ս') {
-                return new RuleResult("ooys", 2);
+        CharInfo charInfo = getCharInfo(chars, i);
+
+        if (charInfo.current() == 'ո' && i + 2 < chars.length) {
+            CharInfo nextCharInfo = getCharInfo(chars, i + 1);
+            CharInfo thirdCharInfo = getCharInfo(chars, i + 2);
+
+            if (nextCharInfo.current() == 'յ') {
+                if (thirdCharInfo.current() == 'ր') {
+                    return new RuleResult(formatOutput("ooyr", charInfo.isUpperCase()), 2);
+                }
+                if (thirdCharInfo.current() == 'ս') {
+                    return new RuleResult(formatOutput("ooys", charInfo.isUpperCase()), 2);
+                }
             }
         }
         return null;
