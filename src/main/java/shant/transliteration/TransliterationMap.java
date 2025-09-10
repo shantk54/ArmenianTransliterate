@@ -1,4 +1,4 @@
-package shant;
+package shant.transliteration;
 
 import java.util.Map;
 
@@ -33,7 +33,7 @@ public class TransliterationMap {
                 Map.entry('`', ""), Map.entry('՛', ""),
                 Map.entry('‘', "'"), Map.entry('’', "'"),
                 Map.entry('՜', ""), Map.entry(' ', " "),
-                Map.entry('՝', " "), Map.entry('.', ";"),
+                Map.entry('՝', ""), Map.entry('.', ";"),
                 Map.entry('-', " "),
                 Map.entry('\n', "\n"), Map.entry('\r', "")
         );

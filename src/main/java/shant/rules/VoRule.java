@@ -1,15 +1,14 @@
 package shant.rules;
 
-import shant.Transliterate;
-import shant.TransliterationRule;
+import shant.utils.Utils;
 
-public class VoRule implements TransliterationRule {
+public class VoRule extends TransliterationRule {
     @Override
     public RuleResult apply(char[] chars, int i) {
         char current = Character.toLowerCase(chars[i]);
         boolean isUpperCase = Character.isUpperCase(chars[i]);
 
-        if (current == 'ո' && Transliterate.isStartOfWord(chars, i)) {
+        if (current == 'ո' && Utils.isStartOfWord(chars, i)) {
             if (i + 1 < chars.length && Character.toLowerCase(chars[i + 1]) == 'ւ') {
                 return new RuleResult(formatOutput("oo", isUpperCase), 1);
             }
@@ -27,13 +26,5 @@ public class VoRule implements TransliterationRule {
         }
 
         return null;
-    }
-
-    private String formatOutput(String output, boolean isUpperCase) {
-        return isUpperCase ? capitalize(output) : output;
-    }
-
-    private String capitalize(String str) {
-        return Character.toUpperCase(str.charAt(0)) + str.substring(1);
     }
 }

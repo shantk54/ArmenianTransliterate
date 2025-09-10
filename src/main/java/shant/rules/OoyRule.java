@@ -1,8 +1,6 @@
 package shant.rules;
 
-import shant.TransliterationRule;
-
-public class OoyRule implements TransliterationRule {
+public class OoyRule extends TransliterationRule {
     @Override
     public RuleResult apply(char[] chars, int i) {
         if (chars[i] == 'ո' && i + 2 < chars.length && chars[i + 1] == 'յ') {

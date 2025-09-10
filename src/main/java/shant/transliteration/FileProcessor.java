@@ -1,4 +1,4 @@
-package shant;
+package shant.transliteration;
 
 import java.io.IOException;
 import java.nio.file.Files;
