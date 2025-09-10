@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Optional;
+import java.nio.file.StandardOpenOption;
+import java.util.List;
 
 public class Main {
 
@@ -12,39 +13,52 @@ public class Main {
         Path resourcesDir = Paths.get("src/main/resources");
         Path outputFile = resourcesDir.resolve("output.txt");
 
-        Path inputFile;
         try {
             if (!Files.isDirectory(resourcesDir)) {
                 throw new IOException("Resources directory does not exist or is not a directory");
             }
 
+            // Clear the output file at the start of the program
+            Files.writeString(outputFile, "", StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+
+            List<Path> inputFiles;
             try (var files = Files.list(resourcesDir)) {
-                Optional<Path> optionalInput = files
+                inputFiles = files
                         .filter(path -> path.toString().endsWith(".txt"))
                         .filter(path -> !"output.txt".equals(path.getFileName().toString()))
-                        .findFirst();
-
-                inputFile = optionalInput.orElseThrow(() -> new IOException("No valid .txt file found in resources directory"));
+                        .toList();
             }
+
+            if (inputFiles.isEmpty()) {
+                throw new IOException("No valid .txt files found in resources directory");
+            }
+
+            Transliterate transliterate = new Transliterate();
+
+            for (Path inputFile : inputFiles) {
+                String content = Files.readString(inputFile);
+
+                // Skip empty files
+                if (content.isBlank()) {
+                    System.err.println("Skipping empty file: " + inputFile);
+                    continue;
+                }
+
+                // Clean and transliterate content
+                String cleanedContent = content.replaceAll("(?<=\\p{L})[^\\p{L}\\s]+(?=\\p{L})", "");
+                String transliteratedContent = transliterate.transliterate(cleanedContent);
+
+                // Append transliterated content to the output file
+                Files.writeString(outputFile, transliteratedContent + System.lineSeparator(),
+                        StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+
+                System.out.println("Processed file: " + inputFile);
+            }
+
+            System.out.println("Transliteration complete. Output written to: " + outputFile);
 
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
-            return;
-        }
-
-        Transliterate transliterate = new Transliterate();
-        try {
-            String content = Files.readString(inputFile);
-
-            String cleanedContent = content.replaceAll("(?<=\\p{L})[^\\p{L}\\s]+(?=\\p{L})", "");
-
-            String transliteratedContent = transliterate.transliterate(cleanedContent);
-
-            Files.writeString(outputFile, transliteratedContent);
-
-            System.out.println("Transliteration complete. Output written to: " + outputFile);
-        } catch (IOException e) {
-            System.err.println("Error processing files: " + e.getMessage());
         }
     }
 }
