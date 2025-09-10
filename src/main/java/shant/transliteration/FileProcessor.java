@@ -21,10 +21,10 @@ public class FileProcessor {
                 throw new IOException("No valid .txt files found in resources directory");
             }
 
-            Transliterate transliterate = new Transliterate();
+            Transliteration transliteration = new Transliteration();
             for (Path inputFile : inputFiles) {
                 Path outputFile = getOutputFilePath(inputFile);
-                processFile(inputFile, outputFile, transliterate);
+                processFile(inputFile, outputFile, transliteration);
             }
 
         } catch (IOException e) {
@@ -53,7 +53,7 @@ public class FileProcessor {
         return inputFile.getParent().resolve(outputFileName);
     }
 
-    private void processFile(Path inputFile, Path outputFile, Transliterate transliterate) throws IOException {
+    private void processFile(Path inputFile, Path outputFile, Transliteration transliteration) throws IOException {
         String content = Files.readString(inputFile);
 
         if (content.isBlank()) {
@@ -62,7 +62,7 @@ public class FileProcessor {
         }
 
         String cleanedContent = content.replaceAll("(?<=\\p{L})[^\\p{L}\\s]+(?=\\p{L})", "");
-        String transliteratedContent = transliterate.transliterate(cleanedContent);
+        String transliteratedContent = transliteration.transliterate(cleanedContent);
 
         Files.writeString(outputFile, transliteratedContent, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 

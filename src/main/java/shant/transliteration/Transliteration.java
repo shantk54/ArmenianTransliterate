@@ -12,7 +12,7 @@ import shant.utils.Utils;
 
 import java.util.List;
 
-public class Transliterate {
+public class Transliteration {
 
     private final List<TransliterationRule> rules = List.of(
             new HiRule(),
