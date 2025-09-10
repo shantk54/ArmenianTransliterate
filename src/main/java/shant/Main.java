@@ -18,7 +18,6 @@ public class Main {
                 throw new IOException("Resources directory does not exist or is not a directory");
             }
 
-            // Clear the output file at the start of the program
             Files.writeString(outputFile, "", StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
             List<Path> inputFiles;
@@ -38,17 +37,14 @@ public class Main {
             for (Path inputFile : inputFiles) {
                 String content = Files.readString(inputFile);
 
-                // Skip empty files
                 if (content.isBlank()) {
                     System.err.println("Skipping empty file: " + inputFile);
                     continue;
                 }
 
-                // Clean and transliterate content
                 String cleanedContent = content.replaceAll("(?<=\\p{L})[^\\p{L}\\s]+(?=\\p{L})", "");
                 String transliteratedContent = transliterate.transliterate(cleanedContent);
 
-                // Append transliterated content to the output file
                 Files.writeString(outputFile, transliteratedContent + System.lineSeparator(),
                         StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 

@@ -6,18 +6,20 @@ import shant.rules.JRule;
 import shant.rules.OoyRule;
 import shant.rules.VoRule;
 import shant.rules.YRule;
+import shant.rules.YevRule;
 
 import java.util.List;
 
 public class Transliterate {
 
     private final List<TransliterationRule> rules = List.of(
-            new YRule(),
-            new VoRule(),
-            new IvRule(),
             new HiRule(),
+            new IvRule(),
+            new JRule(),
             new OoyRule(),
-            new JRule()
+            new VoRule(),
+            new YevRule(),
+            new YRule()
     );
 
     public String transliterate(String input) {
@@ -39,11 +41,21 @@ public class Transliterate {
                 continue;
             }
 
-            String mapped = TransliterationMap.BASE_MAP.get(c);
-            if (mapped != null) {
-                result.append(mapped);
+            if (Character.isUpperCase(c)) {
+                char lowerCase = Character.toLowerCase(c);
+                String mapped = TransliterationMap.BASE_MAP.get(lowerCase);
+                if (mapped != null) {
+                    result.append(capitalize(mapped));
+                } else {
+                    result.append(c);
+                }
             } else {
-                result.append(c);
+                String mapped = TransliterationMap.BASE_MAP.get(c);
+                if (mapped != null) {
+                    result.append(mapped);
+                } else {
+                    result.append(c);
+                }
             }
         }
 
@@ -64,5 +76,9 @@ public class Transliterate {
         int end = i;
         while (end < chars.length && !Character.isWhitespace(chars[end])) end++;
         return end - start;
+    }
+
+    private String capitalize(String str) {
+        return Character.toUpperCase(str.charAt(0)) + str.substring(1);
     }
 }
