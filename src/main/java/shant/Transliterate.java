@@ -1,7 +1,7 @@
 package shant;
 
 import shant.rules.HiRule;
-import shant.rules.IvRule;
+import shant.rules.HyoonRule;
 import shant.rules.JRule;
 import shant.rules.OoyRule;
 import shant.rules.VoRule;
@@ -14,7 +14,7 @@ public class Transliterate {
 
     private final List<TransliterationRule> rules = List.of(
             new HiRule(),
-            new IvRule(),
+            new HyoonRule(),
             new JRule(),
             new OoyRule(),
             new VoRule(),
