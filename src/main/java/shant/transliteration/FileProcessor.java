@@ -9,21 +9,26 @@ import java.util.List;
 
 public class FileProcessor {
 
-    public void processFiles() {
-        String resourcesDirPath = "src/main/resources";
-        Path resourcesDir = Paths.get(resourcesDirPath);
+    private static final String RESOURCES_DIR = "src/main/resources";
+    private static final String OUTPUT_DIR = RESOURCES_DIR + "/output";
 
+    public void processFiles() {
         try {
-            validateResourcesDirectory(resourcesDir);
+            Path resourcesDir = Paths.get(RESOURCES_DIR);
+            Path outputDir = Paths.get(OUTPUT_DIR);
+
+            validateDirectory(resourcesDir);
+            createOutputDirectory(outputDir);
 
             List<Path> inputFiles = getInputFiles(resourcesDir);
             if (inputFiles.isEmpty()) {
-                throw new IOException("No valid .txt files found in resources directory");
+                System.err.println("No valid .txt files found in resources directory.");
+                return;
             }
 
             Transliteration transliteration = new Transliteration();
             for (Path inputFile : inputFiles) {
-                Path outputFile = getOutputFilePath(inputFile);
+                Path outputFile = getOutputFilePath(inputFile, outputDir);
                 processFile(inputFile, outputFile, transliteration);
             }
 
@@ -32,9 +37,15 @@ public class FileProcessor {
         }
     }
 
-    private void validateResourcesDirectory(Path resourcesDir) throws IOException {
-        if (!Files.isDirectory(resourcesDir)) {
-            throw new IOException("Resources directory does not exist or is not a directory");
+    private void validateDirectory(Path directory) throws IOException {
+        if (!Files.isDirectory(directory)) {
+            throw new IOException("Directory does not exist or is not a directory: " + directory);
+        }
+    }
+
+    private void createOutputDirectory(Path outputDir) throws IOException {
+        if (!Files.exists(outputDir)) {
+            Files.createDirectories(outputDir);
         }
     }
 
@@ -47,10 +58,10 @@ public class FileProcessor {
         }
     }
 
-    private Path getOutputFilePath(Path inputFile) {
+    private Path getOutputFilePath(Path inputFile, Path outputDir) {
         String inputFileName = inputFile.getFileName().toString();
         String outputFileName = inputFileName.replace(".txt", "_output.txt");
-        return inputFile.getParent().resolve(outputFileName);
+        return outputDir.resolve(outputFileName);
     }
 
     private void processFile(Path inputFile, Path outputFile, Transliteration transliteration) throws IOException {
