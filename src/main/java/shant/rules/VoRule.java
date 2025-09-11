@@ -20,6 +20,7 @@ public class VoRule extends TransliterationRule {
                 if (nextCharInfo.current() == 'ո') return new RuleResult(formatOutput("vo", charInfo.isUpperCase()), 2);
                 if (nextCharInfo.current() == 'ա') return new RuleResult(formatOutput("va", charInfo.isUpperCase()), 2);
                 if (nextCharInfo.current() == 'ե') return new RuleResult(formatOutput("ve", charInfo.isUpperCase()), 2);
+                if (nextCharInfo.current() == 'ի') return new RuleResult(formatOutput("vi", charInfo.isUpperCase()), 2);
             }
             return new RuleResult(formatOutput("oo", charInfo.isUpperCase()), 1);
         }

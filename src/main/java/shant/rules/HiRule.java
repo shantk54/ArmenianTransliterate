@@ -8,7 +8,7 @@ public class HiRule extends TransliterationRule {
         CharInfo charInfo = getCharInfo(chars, i);
 
         if (Character.toLowerCase(charInfo.current()) == 'յ') {
-            if (Utils.isEndOfWord(chars, i) && Utils.getWordLength(chars, i) > 5) {
+            if (Utils.isEndOfWord(chars, i) && Utils.getWordLength(chars, i) > 3) {
                 return new RuleResult(formatOutput("h", charInfo.isUpperCase()), 0);
             }
             if (Utils.isStartOfWord(chars, i)) {
