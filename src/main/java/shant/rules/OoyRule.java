@@ -19,6 +19,9 @@ public class OoyRule extends TransliterationRule {
                 if (thirdCharInfo.current() == 'ն') {
                     return new RuleResult(formatOutput("ooyn", charInfo.isUpperCase()), 2);
                 }
+                if (thirdCharInfo.current() == 'տ') {
+                    return new RuleResult(formatOutput("ooyd", charInfo.isUpperCase()), 2);
+                }
             }
         }
         return null;
