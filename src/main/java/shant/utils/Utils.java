@@ -7,8 +7,9 @@ public class Utils {
     }
 
     public static boolean isEndOfWord(char[] chars, int i) {
-        return (i >= chars.length - 1 || Character.isWhitespace(chars[i + 1]));
+        return i == chars.length - 1 || !Character.isLetter(chars[i + 1]);
     }
+
 
     public static String capitalize(String str) {
         return Character.toUpperCase(str.charAt(0)) + str.substring(1);

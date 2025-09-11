@@ -1,6 +1,7 @@
 package shant.transliteration;
 
 import shant.rules.DooRule;
+import shant.rules.EeRule;
 import shant.rules.EhRule;
 import shant.rules.HiRule;
 import shant.rules.HyoonRule;
@@ -19,6 +20,7 @@ public class Transliteration {
 
     private final List<TransliterationRule> rules = List.of(
             new DooRule(),
+            new EeRule(),
             new EhRule(),
             new HiRule(),
             new HyoonRule(),
